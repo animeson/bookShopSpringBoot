@@ -17,8 +17,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="author_ID", nullable=false)
     private Author author;
-
-    @OneToMany(mappedBy = "categoryID")
-    private Set<Category> categories;
+    @Enumerated(EnumType.STRING)
+    private Category categories;
 }
 

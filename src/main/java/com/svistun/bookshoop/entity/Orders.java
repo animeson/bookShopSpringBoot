@@ -15,6 +15,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long OrderID;
     private LocalDateTime orderDataTime;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
     @JoinColumn(name="person_ID")

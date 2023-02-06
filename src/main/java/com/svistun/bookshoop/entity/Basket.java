@@ -20,9 +20,9 @@ public class Basket {
 
     @OneToMany(mappedBy = "bookID")
     private Set<Book> books;
-
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-
+    @Enumerated(EnumType.STRING)
     private Status status;
 
 }
