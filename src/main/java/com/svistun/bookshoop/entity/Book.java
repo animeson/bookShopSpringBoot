@@ -3,7 +3,7 @@ package com.svistun.bookshoop.entity;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Data
@@ -17,8 +17,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="author_ID", nullable=false)
     private Author author;
-
-    @OneToMany(mappedBy = "categoryID")
-    private Set<Category> categories;
+    @Enumerated(EnumType.STRING)
+    private Category categories;
 }
 

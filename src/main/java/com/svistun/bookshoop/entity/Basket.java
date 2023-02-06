@@ -3,7 +3,7 @@ package com.svistun.bookshoop.entity;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Data
@@ -16,13 +16,13 @@ public class Basket {
 
     @ManyToOne
     @JoinColumn(name="person_ID")
-    private Person person;
+    private User user;
 
     @OneToMany(mappedBy = "bookID")
     private Set<Book> books;
-
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-
+    @Enumerated(EnumType.STRING)
     private Status status;
 
 }

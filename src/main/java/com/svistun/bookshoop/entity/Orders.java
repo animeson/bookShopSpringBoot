@@ -3,7 +3,7 @@ package com.svistun.bookshoop.entity;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,10 +15,11 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long OrderID;
     private LocalDateTime orderDataTime;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne
     @JoinColumn(name="person_ID")
-    private Person person;
+    private User user;
 
     @OneToMany(mappedBy = "bookID")
     private Set<Book> books;
