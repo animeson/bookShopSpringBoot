@@ -17,9 +17,6 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name="person_ID")
     private User user;
-    @ManyToOne
-    @JoinColumn(name="book_ID")
-    private Book book;
     private LocalDateTime dateTimeComment;
 
 }
