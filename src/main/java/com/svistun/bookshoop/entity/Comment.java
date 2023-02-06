@@ -3,7 +3,7 @@ package com.svistun.bookshoop.entity;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,7 +16,7 @@ public class Comment {
     private String comment;
     @ManyToOne
     @JoinColumn(name="person_ID")
-    private Person person;
+    private User user;
     @ManyToOne
     @JoinColumn(name="book_ID")
     private Book book;
