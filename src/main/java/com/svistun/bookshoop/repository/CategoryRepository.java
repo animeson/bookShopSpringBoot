@@ -6,13 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository extends JpaRepository<Book,Long> {
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
     @NotNull
-    List<Book> findAll();
-    Optional<Book> findByBookID(Long bookId);
-
-
-
+    List<Category> findAll();
+    List<Category> findByName(String categoryName);
 }

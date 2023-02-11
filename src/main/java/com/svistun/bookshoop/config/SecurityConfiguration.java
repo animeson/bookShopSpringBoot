@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**")
                 .permitAll()
-                .requestMatchers("/api/v1/user/**","/api/v1/book/**")
+                .requestMatchers("/api/v1/user/**","/api/v1/catalog/**")
                 .hasAnyAuthority("USER", "ADMIN")
                 .and()
                 .sessionManagement()
