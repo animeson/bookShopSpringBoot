@@ -1,7 +1,7 @@
 package com.svistun.bookshoop.dto;
 
 public record UserCommentDto(
-        Long personID,
+        Long userID,
         String lastName,
         String firstName
 ) {

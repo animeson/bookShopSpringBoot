@@ -25,16 +25,24 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/catalog")
 @Log4j2
+@CrossOrigin("*")
 public class CatalogController {
     private final CatalogServiceImpl catalogService;
 
     @GetMapping
     public ResponseEntity<MainPageResponse> findAllBook(
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
-            @RequestParam(value = "size", defaultValue = "5") @Min(1) @Max(20) int size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "bookID");
-        return ResponseEntity.ok(catalogService.getMainPageCatalog(PageableFactory
-                .create(page, size, sort)));
+            @RequestParam(value = "size", defaultValue = "16") @Min(1) @Max(20) int size,
+            @RequestParam(value = "sort", defaultValue = "bookID") String sortBy,
+            @RequestParam(value = "author", required = false) String authorName) {
+        Sort sort = Sort.by(sortBy);
+        if (authorName != null) {
+            return ResponseEntity.ok(catalogService.getMainPageCatalog(authorName, PageableFactory
+                    .create(page, size, sort)));
+        } else {
+            return ResponseEntity.ok(catalogService.getMainPageCatalog(PageableFactory
+                    .create(page, size, sort)));
+        }
     }
 
     @GetMapping("book/{bookId}")
@@ -47,8 +55,8 @@ public class CatalogController {
     public ResponseEntity<Page<BookMainPageDto>> getBookByCategoryId(
             @PathVariable String categoryName,
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
-            @RequestParam(value = "size", defaultValue = "5") @Min(1) @Max(20) int size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "bookID");
+            @RequestParam(value = "size", defaultValue = "16") @Min(1) @Max(20) int size,
+            @RequestParam(value = "sort", required = false, defaultValue = "book_id") Sort sort) {
         return ResponseEntity.ok(catalogService.getBookByCategoryName(categoryName,
                 PageableFactory.create(page, size, sort)));
     }

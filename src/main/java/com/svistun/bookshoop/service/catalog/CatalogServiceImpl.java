@@ -25,6 +25,13 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
+    public MainPageResponse getMainPageCatalog(String authorName, Pageable pageable) {
+        return new MainPageResponse()
+                .setBooks(bookService.findByAuthorName(authorName,pageable))
+                .setCategory(categoryService.getAllCategory());
+    }
+
+    @Override
     public BookDto getBookByBookId(Long bookId) {
         return bookService.getBookByBookId(bookId);
     }
@@ -32,7 +39,5 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public Page<BookMainPageDto> getBookByCategoryName(String categoryName, Pageable pageable) {
         return bookService.findByCategoryName(categoryName, pageable);
-
-
     }
 }

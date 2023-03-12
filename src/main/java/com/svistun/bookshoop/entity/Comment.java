@@ -15,7 +15,7 @@ public class Comment {
     private Long commentID;
     private String comment;
     @ManyToOne
-    @JoinColumn(name="person_ID")
+    @JoinColumn(name="user_ID")
     private User user;
     private LocalDateTime dateTimeComment;
 

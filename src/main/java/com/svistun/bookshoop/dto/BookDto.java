@@ -1,5 +1,7 @@
 package com.svistun.bookshoop.dto;
 
+import com.svistun.bookshoop.entity.BookImage;
+
 import java.util.List;
 
 public record BookDto(
@@ -14,7 +16,9 @@ public record BookDto(
         List<String> categories,
         Short weight,
         String infoPublisher,
-        List<CommentDto> comments
+        List<CommentDto> comments,
+        List<ImageBookDTO> images,
+        Double rating
 
 
 ) {

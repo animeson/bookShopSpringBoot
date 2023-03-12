@@ -1,9 +1,6 @@
 package com.svistun.bookshoop.mapperDto;
 
-import com.svistun.bookshoop.dto.AuthorDto;
-import com.svistun.bookshoop.dto.BookDto;
-import com.svistun.bookshoop.dto.CommentDto;
-import com.svistun.bookshoop.dto.UserCommentDto;
+import com.svistun.bookshoop.dto.*;
 import com.svistun.bookshoop.entity.Book;
 import com.svistun.bookshoop.entity.Category;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +12,17 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BookMapperDto implements Function<Book, BookDto> {
+    private final AuthorMapperDto authorMapperDto;
+    private final ImageMapperDto imageMapperDto;
+    private final CommentMapperDto commentMapperDto;
+
     @Override
     public BookDto apply(Book book) {
         return new BookDto(
                 book.getBookID(),
-                book.getAuthor().stream().map(author ->
-                                new AuthorDto(
-                                        author.getAuthorID(),
-                                        author.getLastName(),
-                                        author.getFirstName()))
+                book.getAuthor()
+                        .stream()
+                        .map(authorMapperDto)
                         .collect(Collectors.toList()),
                 book.getPublisher(),
                 book.getYears(),
@@ -39,16 +38,14 @@ public class BookMapperDto implements Function<Book, BookDto> {
                 book.getInfoPublisher(),
                 book.getComments()
                         .stream()
-                        .map(comment -> new CommentDto(
-                                comment.getCommentID(),
-                                comment.getComment(),
-                                new UserCommentDto(
-                                        comment.getUser().getPersonID(),
-                                        comment.getUser().getLastName(),
-                                        comment.getUser().getFirstName()
-                                ),
-                                comment.getDateTimeComment()))
-                        .collect(Collectors.toList()));
+                        .map(commentMapperDto)
+                        .collect(Collectors.toList()),
+                book.getImages()
+                        .stream()
+                        .map(imageMapperDto)
+                        .collect(Collectors.toList()),
+                book.getRating().getRating()
+        );
     }
 }
 

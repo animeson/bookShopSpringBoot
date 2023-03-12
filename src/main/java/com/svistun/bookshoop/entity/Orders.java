@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,5 +24,5 @@ public class Orders {
     private User user;
 
     @OneToMany(mappedBy = "bookID")
-    private Set<Book> books;
+    private Collection<Book> books;
 }

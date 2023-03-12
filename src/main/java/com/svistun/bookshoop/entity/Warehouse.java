@@ -12,7 +12,7 @@ public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long warehouseID;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="book_ID")
     private Book book;
     private Integer quantity;

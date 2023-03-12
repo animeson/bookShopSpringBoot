@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.persistence.*;
+
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -15,11 +18,11 @@ public class Basket {
     private Long basketID;
 
     @ManyToOne
-    @JoinColumn(name="person_ID")
+    @JoinColumn(name="user_ID")
     private User user;
 
     @OneToMany(mappedBy = "bookID")
-    private Set<Book> books;
+    private Collection<Book> books;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @Enumerated(EnumType.STRING)

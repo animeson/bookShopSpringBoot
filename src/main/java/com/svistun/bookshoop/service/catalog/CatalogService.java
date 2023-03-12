@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public interface CatalogService {
     MainPageResponse getMainPageCatalog(Pageable pageable);
+    MainPageResponse getMainPageCatalog(String authorName ,Pageable pageable);
     BookDto getBookByBookId(Long bookId);
     Page<BookMainPageDto> getBookByCategoryName(String categoryName,Pageable pageable);
 }

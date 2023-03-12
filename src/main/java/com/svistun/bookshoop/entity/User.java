@@ -1,5 +1,6 @@
 package com.svistun.bookshoop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,8 +24,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "_user")
 public class User implements UserDetails  {
     @Id
-    @GeneratedValue
-    private Long personID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userID;
     @Email(message = "E-mail should not be empty")
     @Column(unique = true, nullable = false)
     private String email;
@@ -45,6 +46,11 @@ public class User implements UserDetails  {
     private Integer zipCode;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(/*mappedBy = "user",*/
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "userImage_id")
+    private UserImage userImage;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

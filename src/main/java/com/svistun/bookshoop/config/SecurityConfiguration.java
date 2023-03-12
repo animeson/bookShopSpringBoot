@@ -29,6 +29,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.cors().disable();
         http
                 .csrf()
                 .disable()
@@ -40,8 +41,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/user/**","/api/v1/catalog/**")
                 .hasAnyAuthority("USER", "ADMIN")*/
                 .and()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+                /*.cors().configurationSource(corsConfigurationSource())
+                .and()*/
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

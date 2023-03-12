@@ -3,6 +3,7 @@ package com.svistun.bookshoop.service.category;
 import com.svistun.bookshoop.dto.CategoryDto;
 import com.svistun.bookshoop.entity.Book;
 import com.svistun.bookshoop.entity.Category;
+import com.svistun.bookshoop.mapperDto.CategoryMapperDto;
 import com.svistun.bookshoop.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,14 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryMapperDto categoryMapperDto;
     @Override
     public List<CategoryDto> getAllCategory() {
         List<CategoryDto> categoryDto = categoryRepository.findAll()
                 .stream()
-                .map(response -> new CategoryDto(
-                        response.getCategoryID(),
-                        response.getName(),
-                        response.getBooks().size())).toList();
+                .map(categoryMapperDto).toList();
         if (categoryDto.isEmpty()) {
             throw new NullPointerException("Category not found");
         }

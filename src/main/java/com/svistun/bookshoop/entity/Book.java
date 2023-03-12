@@ -5,64 +5,59 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.persistence.*;
+import lombok.experimental.Accessors;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 @Data
 @Entity
 @RequiredArgsConstructor
+@Accessors(chain = true)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookID;
     private String name;
     private String title;
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    @JoinTable(name = "author_book", joinColumns = {
-            @JoinColumn(name = "book_id")
-    },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "author_id")})
-    private List<Author> author;
     private String publisher;
     private Short years;
     private Short page;
     private String ISBN;
     private String binding;
     private String format;
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.ALL
-            }
-    )
-    @JoinTable(name = "book_categories",
-            joinColumns = {
-                    @JoinColumn(name = "book_id")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "category_id")})
-    @JsonIgnore
-    private List<Category> categories;
-
     private Short weight;
     private String infoPublisher;
-
-    @OneToMany(
-            fetch = FetchType.LAZY,
+    @OneToOne
+    @JoinColumn(name="warehouse_id")
+    @JsonIgnore
+    private Warehouse warehouse;
+    @ManyToOne
+    @JoinColumn(name = "rating_id")
+    private BookRating rating;
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JoinTable(name = "comment_book",
-            joinColumns = {
-                    @JoinColumn(name = "book_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "comments_id")
-            }
-    )
+    @JoinTable(name = "author_book",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")})
+    private Collection<Author> author;
     @JsonIgnore
-    private List<Comment> comments;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "book_categories",joinColumns = {
+            @JoinColumn(name = "book_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "category_id")})
+    private Collection<Category> categories;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "comment_book", joinColumns = {
+            @JoinColumn(name = "book_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "comment_id")})
+    private Collection<Comment> comments;
+
+    @ManyToMany(mappedBy = "book",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Collection<BookImage> images;
+
 }
 
