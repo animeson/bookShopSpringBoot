@@ -1,6 +1,6 @@
 package com.svistun.bookshoop.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,17 +22,13 @@ public class UserImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "user_image_id")
     private Long userImageID;
-
     private String filename;
-
     private String path;
-
     private String mimeType;
     private Long size;
     private LocalDateTime dataTimeUploads;
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "userImage")
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 }

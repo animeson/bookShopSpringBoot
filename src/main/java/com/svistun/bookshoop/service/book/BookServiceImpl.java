@@ -10,6 +10,7 @@ import com.svistun.bookshoop.mapperDto.BookMainMapperDto;
 import com.svistun.bookshoop.mapperDto.BookMapperDto;
 import com.svistun.bookshoop.repository.BookRatingRepository;
 import com.svistun.bookshoop.repository.BookRepository;
+import com.svistun.bookshoop.repository.StockRepository;
 import com.svistun.bookshoop.service.image.ImageServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,17 +32,24 @@ public class BookServiceImpl implements BookServiceExtended {
     private final BookMapperDto bookMapperDto;
     private final ImageServiceImp imageServiceImp;
     private final BookRatingRepository bookRatingRepository;
+    private final StockRepository stockRepository;
 
     @Override
     public Page<BookMainPageDto> getAllBook(Pageable pageable) {
-        return getAllBookMainPage(bookRepository.findAll(pageable), pageable);
+        return getAllBookMainPage(stockRepository.findAllByBook(pageable), pageable);
 
     }
 
     public BookDto getBookByBookId(Long bookId) {
-        return bookRepository.findByBookID(bookId).map(bookMapperDto)
+        return stockRepository.findByBookId(bookId).map(bookMapperDto)
                 .orElseThrow(() ->
                         new NoSuchElementException("No book found for bookId: " + bookId));
+    }
+
+    @Override
+    public Book getBookId(Long bookId) {
+        return stockRepository.findByBookId(bookId).orElseThrow(() ->
+                new NoSuchElementException("No book found for bookId: " + bookId));
     }
 
     @Override
@@ -59,9 +67,9 @@ public class BookServiceImpl implements BookServiceExtended {
     }
 
     @Override
-    public Page<BookMainPageDto> findByCategoryName(String categoryName, Pageable pageable) {
-        return getAllBookMainPage(bookRepository
-                .findAllByCategoryName(categoryName, pageable), pageable);
+    public Page<BookMainPageDto> findByCategoryID(Long categoryID, Pageable pageable) {
+        return getAllBookMainPage(stockRepository
+                .findBookByCategoryId(categoryID, pageable), pageable);
     }
     @Override
     public Page<BookMainPageDto> findByAuthorName(String authorName, Pageable pageable) {
@@ -87,6 +95,7 @@ public class BookServiceImpl implements BookServiceExtended {
 
     @Override
     @Transactional
+    //TODO: fix created rating
     public void addBookRating(Long bookID, Double score) {
         Book book = bookRepository.findByBookID(bookID)
                 .orElseThrow(() -> new NoSuchElementException("No book found for bookId: " + bookID));

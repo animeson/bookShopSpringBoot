@@ -1,11 +1,16 @@
 package com.svistun.bookshoop.repository;
 
-import com.svistun.bookshoop.entity.Warehouse;
+import com.svistun.bookshoop.entity.OrderStatus;
+import com.svistun.bookshoop.entity.Orders;
+import com.svistun.bookshoop.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
+public interface OrderRepository extends JpaRepository<Orders, Long> {
+    Optional<Orders> findByUserAndStatus(User user, OrderStatus status);
 
 /*    @Query("SELECT w.*, b.* " +
             "FROM warehouse w " +

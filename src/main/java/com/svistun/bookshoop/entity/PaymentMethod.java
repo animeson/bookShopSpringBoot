@@ -1,6 +1,6 @@
 package com.svistun.bookshoop.entity;
 
 public enum PaymentMethod {
-    CASH,CARD
+    CASH,CARD,NOT_SELECTED
 
 }

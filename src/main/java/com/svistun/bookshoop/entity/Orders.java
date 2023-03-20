@@ -1,28 +1,34 @@
 package com.svistun.bookshoop.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
 @RequiredArgsConstructor
+@Accessors(chain = true)
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long OrderID;
-    private LocalDateTime orderDataTime;
+    private Long orderID;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private OrderStatus status;
     @ManyToOne
     @JoinColumn(name="person_ID")
     private User user;
+    private Double totalCost;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<ShoppingCart> shoppingCarts;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
-    @OneToMany(mappedBy = "bookID")
-    private Collection<Book> books;
+
+
 }

@@ -10,12 +10,15 @@ import java.util.Collection;
 @Entity
 public class BookRating {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     private Long bookRatingID;
-    private Double rating ;
+    private Double rating;
     private Integer count;
-
     @JsonIgnore
-    @OneToMany(mappedBy = "rating")
+    @OneToMany(
+            mappedBy = "rating"
+    )
     private Collection<Book> books;
 }
