@@ -10,14 +10,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Stock {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stockID;
     @OneToOne
-    @JoinColumn(
-            name = "book_ID"
-    )
+    @JoinColumn(name = "book_ID")
     @JsonBackReference
     private Book book;
     private Integer quantity;

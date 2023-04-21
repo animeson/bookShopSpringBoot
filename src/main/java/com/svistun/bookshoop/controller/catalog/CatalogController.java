@@ -24,27 +24,36 @@ public class CatalogController {
     public ResponseEntity<Page<BookMainPageDto>> findAllBook(
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
             @RequestParam(value = "size", defaultValue = "16") @Min(1) @Max(20) int size) {
-        return ResponseEntity.ok().body(catalogService.getAllBook(PageableFactory.create(page, size)));
+        return ResponseEntity.ok().body(catalogService.getAllBookMainPage(PageableFactory.create(page, size)));
     }
 
-    @GetMapping("/{bookId}")
+    @GetMapping("/{bookID}")
     public ResponseEntity<BookDto> getBookByBookId(
-            @PathVariable Long bookId) {
-        return ResponseEntity.ok(catalogService.getBookByBookId(bookId));
+            @PathVariable Long bookID) {
+        return ResponseEntity.ok(catalogService.getBookByBookId(bookID));
     }
 
-    @GetMapping("category/{categoryID}")
+    @GetMapping("/category/{categoryID}")
     public ResponseEntity<Page<BookMainPageDto>> getBookByCategoryId(
             @PathVariable Long categoryID,
             @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
             @RequestParam(value = "size", defaultValue = "16") @Min(1) @Max(20) int size) {
-        return ResponseEntity.ok(catalogService.getBookByCategoryID(categoryID,
+        return ResponseEntity.ok(catalogService.findByCategoryID(categoryID,
                 PageableFactory.create(page, size)));
     }
 
     @GetMapping("/category")
     public ResponseEntity<Collection<CategoryDto>> getCategory() {
-        return ResponseEntity.ok().body(catalogService.getCategory());
+        return ResponseEntity.ok().body(catalogService.getAllCategory());
+    }
+
+    @GetMapping("/author/{authorID}")
+    public ResponseEntity<Page<BookMainPageDto>> getBookByAuthorID(
+            @PathVariable Long authorID,
+            @RequestParam(value = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(value = "size", defaultValue = "16") @Min(1) @Max(20) int size) {
+
+        return ResponseEntity.ok(catalogService.findByAuthorID(authorID,PageableFactory.create(page, size)));
     }
 
 }

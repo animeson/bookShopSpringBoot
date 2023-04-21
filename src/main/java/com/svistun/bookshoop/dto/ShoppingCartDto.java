@@ -4,6 +4,8 @@ public record ShoppingCartDto(
         Long shoppingCartID,
         BookMainPageDto books,
         Integer quantity,
-        Double cost
+        Double cost,
+        String createAt,
+        String updateAt
 ) {
 }

@@ -1,8 +1,10 @@
 package com.svistun.bookshoop.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -10,8 +12,10 @@ import java.util.Collection;
 
 @Data
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
+@Builder
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

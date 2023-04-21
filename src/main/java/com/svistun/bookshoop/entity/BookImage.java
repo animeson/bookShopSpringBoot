@@ -20,27 +20,19 @@ import java.util.Collection;
 @Accessors(chain = true)
 public class BookImage {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
-    @JoinColumn(
-            name = "book_image_id"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinColumn(name = "book_image_id")
     private Long bookImageID;
     private String filename;
+    private String url;
     private String path;
     private String mimeType;
     private Long size;
     private LocalDateTime dataTimeUploads;
     private Boolean isPrimary;
     @JsonIgnore
-    @ManyToMany(
-            cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "book_id"
-    )
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Collection<Book> book;
 
 }

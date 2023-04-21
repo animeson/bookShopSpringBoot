@@ -1,10 +1,9 @@
 package com.svistun.bookshoop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
-import jakarta.persistence.*;
 import lombok.experimental.Accessors;
 
 import java.util.Collection;
@@ -20,7 +19,7 @@ public class Book {
     )
     private Long bookID;
     private String name;
-    private String title;
+    private String aboutBook;
     private String publisher;
     private Short years;
     private Short page;
@@ -31,62 +30,34 @@ public class Book {
     private String infoPublisher;
     private Double cost;
     @OneToOne
-    @JoinColumn(
-            name = "stock_id"
-    )
+    @JoinColumn(name = "stock_id")
     @JsonIgnore
     private Stock stock;
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
-    @JoinColumn(
-            name = "rating_id"
-    )
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
     private BookRating rating;
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     @JoinTable(
             name = "author_book",
-            joinColumns = {@JoinColumn(
-                    name = "book_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "author_id"
-            )}
-    )
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Collection<Author> author;
     @JsonIgnore
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
-    @JoinTable(
-            name = "book_categories",
-            joinColumns = {@JoinColumn(
-                    name = "book_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "category_id"
-            )}
-    )
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinTable(name = "book_categories",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Collection<Category> categories;
     @JsonIgnore
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     @JoinTable(
             name = "comment_book",
-            joinColumns = {@JoinColumn(
-                    name = "book_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "comment_id"
-            )}
-    )
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Collection<Comment> comments;
     @ManyToMany(mappedBy = "book",
             cascade = CascadeType.ALL,

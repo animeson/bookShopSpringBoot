@@ -9,15 +9,10 @@ import java.util.Collection;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryID;
     private String name;
     private String title;
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "categories"
-    )
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Collection<Book> books;
 }

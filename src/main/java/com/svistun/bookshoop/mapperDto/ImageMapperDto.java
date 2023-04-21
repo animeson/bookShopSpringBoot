@@ -12,7 +12,7 @@ public class ImageMapperDto implements Function<BookImage, ImageBookDTO> {
     public ImageBookDTO apply(BookImage image) {
         return new ImageBookDTO(
                 image.getFilename(),
-                image.getPath(),
+                image.getUrl(),
                 image.getIsPrimary(),
                 image.getMimeType()
         );

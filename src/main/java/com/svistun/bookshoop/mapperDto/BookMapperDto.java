@@ -20,6 +20,8 @@ public class BookMapperDto implements Function<Book, BookDto> {
     public BookDto apply(Book book) {
         return new BookDto(
                 book.getBookID(),
+                book.getName(),
+                book.getAboutBook(),
                 book.getAuthor()
                         .stream()
                         .map(authorMapperDto)

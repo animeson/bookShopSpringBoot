@@ -1,11 +1,11 @@
 package com.svistun.bookshoop.dto;
 
-import com.svistun.bookshoop.entity.BookImage;
-
 import java.util.List;
 
 public record BookDto(
         Long bookID,
+        String name,
+        String aboutBook,
         List<AuthorDto> author,
         String publisher,
         Short years,

@@ -1,40 +1,27 @@
 package com.svistun.bookshoop.controller.account;
 
-import com.svistun.bookshoop.entity.User;
-import com.svistun.bookshoop.service.user.UserServiceImpl;
+import com.svistun.bookshoop.dto.UserAbbreviatedDto;
+import com.svistun.bookshoop.dto.UserAccountDto;
+import com.svistun.bookshoop.service.user.InfoUserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/account")
-@Log4j2
 public class AccountController {
-    private final UserServiceImpl userService;
+    private final InfoUserService userService;
     @GetMapping
-    public ResponseEntity<Optional<User>> getUser(Authentication authentication) {
-        return ResponseEntity.ok().body(null);
+    public ResponseEntity<UserAccountDto> getUser(Authentication authentication) {
+        return ResponseEntity.ok().body(userService.myAccount(authentication));
     }
-
-    @GetMapping("/setting")
-    public ResponseEntity<Optional<User>> settingUser(Authentication authentication) {
-        return ResponseEntity.ok().body(null);
+    @GetMapping("/user-abbreviated-info")
+    public ResponseEntity<UserAbbreviatedDto> getUserAbbreviatedInfo(Authentication authentication) {
+        return ResponseEntity.ok().body(userService.getUserAbbreviatedInfo(authentication));
     }
-
-    @PatchMapping("/upload-photo")
-    public void uploadPhoto(@RequestParam("file") MultipartFile file,Authentication authentication) {
-        userService.uploadUserPhoto(file,authentication);
-    }
-    @DeleteMapping("/photo")
-    public void deletePhoto(Authentication authentication){
-        userService.deleteUserPhoto(userService.findByEmail(authentication.getName()));
-    }
-
 
 }
